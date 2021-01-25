@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, ActivityIndicator, Modal } from "react-native";
 import { Badge } from 'react-native-paper';
 import { FlatList } from "react-native-gesture-handler";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector, useDispatch } from 'react-redux'
 
 //custom
@@ -71,6 +72,16 @@ function Cart() {
         }
     }
 
+    const deleteCart = (item) => {
+        let temp = cartItems.productList
+        temp.map((i, index) => {
+            if (i.id == item.id) {
+                i['cartSize'] = 0
+            }
+        })
+        ProductList(temp);
+        getCart()
+    }
     const renderCheckout = () => (
         <View>
             <View style={{ backgroundColor: colors.lightGrey, height: 2 }} />
@@ -78,9 +89,7 @@ function Cart() {
                 <Text style={styles.catHeader}> SubTotal</Text>
                 <Text style={[styles.catHeader, { color: colors.Pink }]}> 400</Text>
             </View>
-            <TouchableOpacity style={styles.checkoutbtn} onPress={() => {
-
-            }}>
+            <TouchableOpacity style={styles.checkoutbtn} onPress={() => { }}>
                 <Text style={styles.checkouttxt}> Checkout</Text>
             </TouchableOpacity>
         </View>
@@ -108,22 +117,30 @@ function Cart() {
                                     }} />
                                 </View>
                                 <View style={{ paddingLeft: 10 }}>
-                                    <Text style={styles.catHeader}>{item.title}</Text>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <Text style={styles.catHeader}>{item.title}</Text>
+                                        <Badge
+                                            size={30}
+                                            style={{ backgroundColor: colors.black, alignSelf: 'flex-start' }}
+                                            onPress={() => {
+                                                deleteCart(item)
+                                            }}>
+                                            <MaterialCommunityIcons name="delete" color={colors.white} size={15} />
+                                        </Badge>
+                                    </View>
+
                                     <Text style={[styles.catHeaderSub]} numberOfLines={2}>{item.description}</Text>
                                     <View style={{ flexDirection: 'row', width: Dimensions.get('window').width / 1.7, justifyContent: 'space-between' }}>
                                         <Text style={[{ paddingHorizontal: 5, color: colors.Pink }]}>{'$' + item.price}</Text>
                                         <View style={{ flexDirection: 'row', paddingRight: 20, }}>
-                                            <TouchableOpacity onPress={() => {
+                                            <Badge size={30} onPress={() => {
                                                 checkForMinusItem(item)
-                                            }}>
-                                                <Badge size={30}>-</Badge>
-                                            </TouchableOpacity>
+                                            }} style={{ backgroundColor: colors.black }}>-</Badge>
+
                                             <Text style={styles.cartSize}>{item.cartSize}</Text>
-                                            <TouchableOpacity onPress={() => {
+                                            <Badge size={30} onPress={() => {
                                                 checkForAddItem(item)
-                                            }}>
-                                                <Badge size={30}>+</Badge>
-                                            </TouchableOpacity>
+                                            }} style={{ backgroundColor: colors.black }}>+</Badge>
                                         </View>
                                     </View>
                                 </View>

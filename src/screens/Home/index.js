@@ -119,17 +119,14 @@ function Home() {
                                     <View style={{ flexDirection: 'row', width: Dimensions.get('window').width / 1.7, justifyContent: 'space-between' }}>
                                         <Text style={[{ paddingHorizontal: 5, color: colors.Pink }]}>{'$' + item.price}</Text>
                                         <View style={{ flexDirection: 'row', paddingRight: 20, }}>
-                                            <TouchableOpacity onPress={() => {
+                                            <Badge size={30} onPress={() => {
                                                 checkForMinusItem(item)
-                                            }}>
-                                                <Badge size={30}>-</Badge>
-                                            </TouchableOpacity>
+                                            }} style={{ backgroundColor: colors.black }}>-</Badge>
                                             <Text style={styles.cartSize}>{item.cartSize}</Text>
-                                            <TouchableOpacity onPress={() => {
+                                            <Badge size={30} onPress={() => {
                                                 checkForAddItem(item)
-                                            }}>
-                                                <Badge size={30}>+</Badge>
-                                            </TouchableOpacity>
+                                            }} style={{ backgroundColor: colors.black }}>+</Badge>
+
                                         </View>
                                     </View>
                                 </View>
