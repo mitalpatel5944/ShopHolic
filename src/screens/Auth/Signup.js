@@ -8,27 +8,19 @@ import {
   Text,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch} from 'react-redux';
-import {Button} from 'react-native-paper';
 
-import {LOGIN} from '../../redux/ActionType';
-
-function Login() {
+function Signup() {
   const [email, setemail] = useState('');
   const [pswd, setpswd] = useState('');
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const isLoggedIn = (item) => dispatch({type: LOGIN, payload: item});
 
   const singinwithEmailpswd = () => {
     auth()
-      .signInWithEmailAndPassword(email, pswd)
+      .createUserWithEmailAndPassword(email, pswd)
       .then((res) => {
         console.log('User account created & signed in!', res);
-        AsyncStorage.setItem('user', res.user._user.uid);
-        isLoggedIn(res.user._user.uid);
-        navigation.navigate('Home');
+        alert('Registered Succesfully. Please Login.');
+        navigation.navigate('Login');
       })
       .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
@@ -37,8 +29,6 @@ function Login() {
           alert('That email address is invalid!');
         } else if (error.code === 'auth/weak-password') {
           alert('Password should be at least 6 characters');
-        } else if (error.code == 'auth/user-not-found') {
-          alert('user not found');
         }
 
         console.log(error.code);
@@ -89,19 +79,13 @@ function Login() {
           validate();
         }}
         style={styles.button}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>Signup</Text>
       </TouchableOpacity>
-      <Button
-        onPress={() => {
-          navigation.navigate('Signup');
-        }}>
-        DON'T HAVE AND ACCOUNT ? SINGUP
-      </Button>
     </View>
   );
 }
 
-export default Login;
+export default Signup;
 
 const styles = StyleSheet.create({
   container: {

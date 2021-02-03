@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {Home, Cart, Login, MyOrder, PlaceOrder} from './screens';
+import {Home, Cart, Login, MyOrder, PlaceOrder, Signup} from './screens';
 import {Appbar} from 'react-native-paper';
 import {createStackNavigator} from '@react-navigation/stack';
 import ShoppingCartIcon from './Component/ShoppingCartIcon';
@@ -53,6 +53,11 @@ function App() {
           name="PlaceOrder"
           component={PlaceOrder}
           options={{title: ''}}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          options={{title: 'Signup'}}
         />
         <Stack.Screen name="Cart" component={Cart} />
         <Stack.Screen name="MyOrder" component={MyOrder} />
