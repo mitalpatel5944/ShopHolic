@@ -1,15 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  Dimensions,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Text, Image, Dimensions, ActivityIndicator} from 'react-native';
 import {Badge} from 'react-native-paper';
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
-
 
 //custom
 import apis from '../../lib/apis';
@@ -49,8 +42,6 @@ function Home() {
         log.error('failed get item', err);
       });
   };
-
-  
 
   const getCart = () => {
     let BigData = cartItems.productList.filter(function (e) {

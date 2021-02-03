@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {View, Text, Image, Dimensions, TouchableOpacity} from 'react-native';
 import {Badge} from 'react-native-paper';
 import {FlatList} from 'react-native-gesture-handler';

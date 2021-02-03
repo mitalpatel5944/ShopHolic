@@ -1,7 +1,7 @@
 //Global Libraries
 import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, Image, Dimensions} from 'react-native';
-import {colors, fonts, images} from '../../theme';
+import {View, Text, FlatList, Image} from 'react-native';
+import {colors, fonts} from '../../theme';
 import styles from '../styles';
 import {db} from '../../database';
 
@@ -68,7 +68,6 @@ function MyOrder() {
     <FlatList
       data={myOrder}
       showsVerticalScrollIndicator={false}
-      
       keyExtractor={(item) => 'j' + item.id}
       renderItem={(item, index) => {
         console.log(item);

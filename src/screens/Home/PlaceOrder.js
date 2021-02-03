@@ -1,5 +1,5 @@
 //Global Libraries
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Text} from 'react-native';
 import {Button} from 'react-native-paper';
 import {colors, fonts, images} from '../../theme';

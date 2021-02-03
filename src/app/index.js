@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import {StatusBar, View} from 'react-native';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import { useDispatch} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Router from '../navigation';
 import Landing from '../screens/landing';
 import {colors} from '../theme';
-import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-import {useSelector, useDispatch} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LOGIN} from '../redux/ActionType';
+
 const theme = {
   ...DefaultTheme,
   colors: {
