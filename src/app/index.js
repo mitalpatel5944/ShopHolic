@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { StatusBar, View } from "react-native";
-import Router from "../navigation";
-import Landing from '../screens/landing'
-import { colors } from "../theme";
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import { Provider as StoreProvider } from 'react-redux'
-import store from '../redux/store'
-
+import React, {useState, useEffect} from 'react';
+import {StatusBar, View} from 'react-native';
+import Router from '../navigation';
+import Landing from '../screens/landing';
+import {colors} from '../theme';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import {useSelector, useDispatch} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {LOGIN} from '../redux/ActionType';
 const theme = {
   ...DefaultTheme,
   colors: {
@@ -15,31 +15,36 @@ const theme = {
     accent: 'yellow',
   },
 };
+function App() {
+  const [Splash, setSplash] = useState(true);
+  const dispatch = useDispatch();
+  const isLoggedIn = (item) => dispatch({type: LOGIN, payload: item});
 
-
-export default class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      data: [],
-      Splash: true
-    }
-  }
-  componentDidMount() {
+  useEffect(() => {
     setTimeout(() => {
-      this.setState({ Splash: false })
+      setSplash(false);
     }, 3000);
-  }
-  render() {
-    return (
-      <StoreProvider store={store}>
-        <View style={{ flex: 1 }}>
-          <PaperProvider theme={theme}>
-            <StatusBar backgroundColor={colors.black} barStyle={'dark'} />
-            {this.state.Splash ? <Landing /> : <Router />}
-          </PaperProvider>
-        </View>
-      </StoreProvider>
-    );
-  }
+    getUserId();
+  }, []);
+
+  getUserId = async () => {
+    var token = await AsyncStorage.getItem('user').then((value) => {
+      console.log('value', value);
+      if (value != null) {
+        isLoggedIn(value);
+      } else {
+        isLoggedIn('');
+      }
+    });
+  };
+  return (
+    <View style={{flex: 1}}>
+      <PaperProvider theme={theme}>
+        <StatusBar backgroundColor={colors.black} barStyle={'dark'} />
+        {Splash ? <Landing /> : <Router />}
+      </PaperProvider>
+    </View>
+  );
 }
+
+export default App;
