@@ -1,12 +1,16 @@
 //Global Libraries
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, Image} from 'react-native';
+import {useSelector} from 'react-redux';
+
 import {colors, fonts} from '../../theme';
 import styles from '../styles';
 import {db} from '../../database';
 
 function MyOrder() {
   const [myOrder, setMyorder] = useState([]);
+  const dataRedux = useSelector((state) => state);
+
   useEffect(() => {
     dataGet();
   }, []);
@@ -14,8 +18,12 @@ function MyOrder() {
   const dataGet = () => {
     db.ref('/cartData').on('value', (querySnapShot) => {
       let data = querySnapShot.val() ? querySnapShot.val() : {};
-      // console.log('Data', );
-      setMyorder(Object.values(data));
+      console.log('Data', data);
+      let dataFilter = Object.values(data).filter(
+        (i) => i.user === dataRedux.isLogin,
+      );
+      console.log('dataFilter', dataFilter);
+      setMyorder(dataFilter);
     });
   };
   const renderItem = (i) => {

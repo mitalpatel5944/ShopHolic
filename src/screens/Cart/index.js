@@ -19,6 +19,7 @@ function Cart() {
   const dispatch = useDispatch();
   const ProductList = (item) => dispatch({type: PRODUCTLIST, payload: item});
   const cartItems = useSelector((state) => state);
+  console.log('cartItems', cartItems);
   const navigation = useNavigation();
 
   const getCart = () => {
@@ -90,6 +91,7 @@ function Cart() {
     db.ref('/cartData').push({
       data: cartItems.cartList,
       createAt: moment().format('DD-MM-YYYY hh:mm'),
+      user: cartItems.isLogin,
     });
     navigation.dispatch(
       CommonActions.reset({
